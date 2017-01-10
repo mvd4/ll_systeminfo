@@ -1,0 +1,86 @@
+# limelight crypto_utils appveyor configuration file
+
+version: configuring.{build}
+
+environment:
+    matrix:
+    # VS 2013 Win 32 
+    - image: Visual Studio 2013 
+      configuration: Release
+      platform: Win32
+      LL_TOOLSET: msvc-12.0
+      LL_GENERATOR: Visual Studio 12 2013
+      
+    # VS 2013 x64 
+    - image: Visual Studio 2013 
+      configuration: Release
+      platform: x64
+      LL_TOOLSET: msvc-12.0
+      LL_GENERATOR: Visual Studio 12 2013
+
+    # VS 2015 Win 32 
+    - image: Visual Studio 2015 
+      configuration: Release
+      platform: Win32
+      LL_TOOLSET: msvc-14.0
+      LL_GENERATOR: Visual Studio 14 2015
+    
+    # VS 2015 x64 
+    - image: Visual Studio 2015 
+      configuration: Release
+      platform: x64
+      LL_TOOLSET: msvc-14.0
+      LL_GENERATOR: Visual Studio 14 2015
+
+
+clone_folder: c:\limelight\systeminfo
+
+before_build:
+- cmd: >-
+    echo Building %CONFIGURATION% - %PLATFORM% ( %LL_TOOLSET% / %LL_GENERATOR% )
+
+    if %PLATFORM% == x64 (set LL_PLATFORM=x64) else (set LL_PLATFORM=x32)
+
+    cd %APPVEYOR_BUILD_FOLDER%
+
+    git submodule update --init --recursive
+
+    C:\Python35\python.exe -m venv env
+    
+    env\Scripts\activate.bat
+    
+    python build_ll.py init
+    
+    python build_ll.py bootstrap
+
+    python support/python/library_version.py --appveyor -l systeminfo
+    
+    python build_ll.py configure -a %LL_PLATFORM% -g "%LL_GENERATOR%" -t %LL_TOOLSET%
+
+    python build_ll.py build -w
+
+build:
+  project: build/ll_systeminfo.sln
+
+
+test_script:
+- cmd: >-
+    echo Running Tests for %CONFIGURATION% - %PLATFORM%
+    
+    set LL_TEST_FOLDER=%APPVEYOR_BUILD_FOLDER%\bin\%LL_PLATFORM%\%CONFIGURATION%\
+    
+    cd %LL_TEST_FOLDER%
+
+    ll_systeminfo_test.exe -s -r junit -o test-report.junit.xml || echo Tests failed with return code %ERRORLEVEL%
+
+    python %APPVEYOR_BUILD_FOLDER%/support/python/fix_junit.py -f test-report.junit.xml
+
+
+on_finish:
+- ps: >-
+    $testReportPath = "$($env:LL_TEST_FOLDER)\test-report.junit.xml"
+
+    if([System.IO.File]::Exists($testReportPath)){
+      $wc = New-Object 'System.Net.WebClient'
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path $testReportPath))
+    }

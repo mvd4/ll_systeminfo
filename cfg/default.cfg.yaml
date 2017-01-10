@@ -1,0 +1,27 @@
+# limelight build configuration file
+
+# note: you can use '/' as path delimiter also on Windows
+
+--- 
+
+# build configuration
+architecture:  x64
+configuration: release
+generator:     default
+toolset:       default
+
+# output directories
+build dir:          ./build
+library output dir: ./lib
+binary output dir:  ./bin
+
+
+# include directories
+catch include dir: <the absolute path to the catch include directory>
+boost include dir: <the absolute path to the boost include directory>
+
+
+# library directories
+boost library dir: <the absolute path to the boost library directory> 
+
+

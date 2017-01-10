@@ -1,0 +1,68 @@
+# limelight dependencies file
+
+--- 
+
+dependencies: 
+  catch:
+    type: git
+    build: False
+    url: https://github.com/philsquared/Catch.git
+    tag: v1.5.6
+    target_dir: Catch
+    include_dir: include
+
+  boost:
+    type: git
+    build: True
+    url: https://github.com/boostorg/boost.git
+    tag: boost-1.58.0
+    target_dir: boost-1.58.0
+    include_dir: .
+    library_dir: stage/$architecture$/lib
+    submodules:
+      - libs/algorithm
+      - libs/assert
+      - libs/atomic
+      - libs/bind
+      - libs/concept_check
+      - libs/config
+      - libs/core
+      - libs/detail
+      - libs/filesystem
+      - libs/function
+      - libs/functional
+      - libs/integer
+      - libs/io
+      - libs/iterator
+      - libs/move
+      - libs/mpl
+      - libs/optional
+      - libs/predef
+      - libs/preprocessor
+      - libs/range
+      - libs/static_assert
+      - libs/smart_ptr
+      - libs/system
+      - libs/tokenizer
+      - libs/throw_exception
+      - libs/type_traits
+      - libs/utility
+      - libs/wave
+      - tools/build
+      - tools/inspect
+
+  base:
+    type: ll
+    build: False
+    url: https://mvd4@bitbucket.org/limelightframework/base.git
+    tag: 0.1.1
+  
+  platform_utils:
+    type: ll
+    required:
+      - linux
+    build: True
+    url: https://mvd4@bitbucket.org/mvd4/platform_utils_dev.git
+    tag: HEAD
+
+...

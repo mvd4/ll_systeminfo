@@ -1,0 +1,3 @@
+[submodule "support"]
+	path = support
+	url = https://mvd4@bitbucket.org/limelightframework/build_support.git
