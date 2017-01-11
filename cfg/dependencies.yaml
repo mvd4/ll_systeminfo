@@ -63,7 +63,7 @@ dependencies:
       - linux
       - osx
     build: True
-    url: https://mvd4@bitbucket.org/mvd4/platform_utils_dev.git
-    tag: develop
+    url: https://mvd4@bitbucket.org/limelightframework/platform_utils.git
+    tag: 0.1.0
 
 ...
