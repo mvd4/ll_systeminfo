@@ -24,7 +24,8 @@
 namespace
 {
   using namespace ll::systeminfo::os;
-  
+
+LL_WARNING_DISABLE_GCC( missing-braces );
   static const 
   std::array< std::string, static_cast<size_t>( language::language_code::other ) + 1 > language_codes = {
     "?",
@@ -468,6 +469,7 @@ namespace
     };
 }
 
+LL_WARNING_ENABLE_GCC( unused-local-typedef );
 
 namespace ll
 {
@@ -554,6 +556,8 @@ namespace ll
   
   // ---------------------------------------------------------------------------------------------------------
 
+
+LL_WARNING_DISABLE_GCC( missing-braces );
   std::string to_language_name( os::language::language_code l_ )
   {
     static std::array< std::string, static_cast<size_t>( os::language::language_code::other ) + 1 > strings = {
@@ -751,7 +755,7 @@ namespace ll
   std::string to_country_name( os::language::country_code l_ )
   {
     static std::array< std::string, static_cast<size_t>( os::language::country_code::other ) + 1 > strings = {
-      "Unknown",      
+      "Unknown",
       "Andorra",
       "United Arab Emirates",
       "Afghanistan",
@@ -1006,7 +1010,8 @@ namespace ll
 
     return strings[static_cast<size_t>( l_ )];
   }
-  
+
+LL_WARNING_ENABLE_GCC( missing-braces );
 
   // ---------------------------------------------------------------------------------------------------------
 

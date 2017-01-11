@@ -20,7 +20,9 @@
 
 #include <base/environment.h>
 
+LL_WARNING_DISABLE_GCC( unused-local-typedef );
 #include <boost/algorithm/string.hpp>
+LL_WARNING_ENABLE_GCC( unused-local-typedef );
 
 #import <Cocoa/Cocoa.h>
 

@@ -17,6 +17,18 @@
 *************************************************************************************************************/
 
 #include "platform_impl.h"
+#include "systeminfo/exception.h"
+
+#include <platform_utils/osx/scoped_cf_ref.h>
+
+#include <array>
+#include <vector>
+
+LL_WARNING_DISABLE_GCC( unused-local-typedef );
+#include <boost/algorithm/string.hpp>
+#include <boost/optional.hpp>
+LL_WARNING_ENABLE_GCC( unused-local-typedef );
+
 
 #include <Cocoa/Cocoa.h>
 #include <sys/sysctl.h>
@@ -25,15 +37,6 @@
 #include <mach/mach.h>
 #include <mach/vm_statistics.h>
 
-#include <array>
-#include <vector>
-
-#include <boost/algorithm/string.hpp>
-#include <boost/optional.hpp>
-
-#include <platform_utils/osx/scoped_cf_ref.h>
-
-#include "systeminfo/exception.h"
 
 
 namespace ll
@@ -47,9 +50,10 @@ namespace platform
     template<typename property_t>
     inline CFTypeID get_cf_type_id() { return 0; }
   
-    template<>
+    /*template<>
     inline CFTypeID get_cf_type_id< CFStringRef >() { return 7; }
-  
+    */
+      
     template<>
     inline CFTypeID get_cf_type_id< CFDataRef >() { return 20; }
   
