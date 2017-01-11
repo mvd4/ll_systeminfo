@@ -61,8 +61,9 @@ dependencies:
     type: ll
     required:
       - linux
+      - osx
     build: True
     url: https://mvd4@bitbucket.org/mvd4/platform_utils_dev.git
-    tag: HEAD
+    tag: develop
 
 ...
